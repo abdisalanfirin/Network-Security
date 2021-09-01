@@ -168,7 +168,7 @@ Run the commands that enable and start firewalld upon boots and reboots.
 **sudo systemctl enable firewalld**
 **sudo systemctl start firewalld**
 
-![Enabale and start firewalld](./Images/snap_2.PNG)
+![Enabale and start firewalld](./Images/snap_2.png)
 
 Note: This will ensure that firewalld remains active after each reboot.
 

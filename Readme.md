@@ -151,7 +151,9 @@ Before getting started, you should verify that you do not have any instances of 
 
 ### Answer
 
-**Asudo apt -y remove ufwD** 
+**sudo apt -y remove ufwD** 
+
+![Removes runing ufw](./Images/snap_1.PNG)
 
 
 
@@ -166,9 +168,9 @@ Run the commands that enable and start firewalld upon boots and reboots.
 **sudo systemctl enable firewalld**
 **sudo systemctl start firewalld**
 
+![Enabale and start firewalld](./Images/snap_2.PNG)
+
 Note: This will ensure that firewalld remains active after each reboot.
-
-
 
 ## Confirm that the service is running.
 
@@ -178,6 +180,7 @@ Run the command that checks whether or not the firewalld service is up and runni
 
 **systemctl status firewalld.service**
 
+![System staus check](./Images/snap_3.PNG)
 
 ## List all firewall rules currently configured.
 
@@ -189,18 +192,19 @@ Run the command that lists all currently configured firewall rules:
 
 **sudo firewall-cmd --list-all**
 
+![List currently configur firewall](./Images/snap_4.PNG)
+
 Take note of what Zones and settings are configured. You many need to remove unneeded services and settings.
 
-
-
 ## List all supported service types that can be enabled.
-
 
 1. Run the command that lists all currently supported services to see if the service you need is available
 
 ### Answer Command
 
 **sudo firewalld-cmd --get-services**
+
+![Firewall get service](./Images/snap_6.PNG)
 
 
 We can see that the Home and Drop Zones are created by default.
@@ -211,11 +215,11 @@ We can see that the Home and Drop Zones are created by default.
 
 ### Answer Command
 
-**sudo firewall-cmd --lit-all-zones**
+**sudo firewall-cmd --list-all-zones**
+
+![Firewall all zones](./Images/snap_5.PNG)
 
 We can see that the Public and Drop Zones are created by default. Therefore, we will need to create Zones for Web, Sales, and Mail.
-
-
 
 ## Create Zones for Web, Sales and Mail.
 
@@ -224,15 +228,15 @@ We can see that the Public and Drop Zones are created by default. Therefore, we 
 
 ### Answer Command
 
-**sudo firewall-cmd --premanent --new-zone=web**
-**sudo firewall-cmd --premanent --new-zone=sales**
-**sudo firewall-cmd --premanent --new-zone=mail**
+**sudo firewall-cmd --permanent --new-zone=web**
+**sudo firewall-cmd --permanent --new-zone=sales**
+**sudo firewall-cmd --permanent --new-zone=mail**
 
+![Creates Web,Sales and Mail](./Images/snap_7.PNG)
 
-
+![Creates Web,Sales and Mail](./Images/snap_x.PNG)
 
 ## Set the zones to their designated interfaces:
-
 
 1. Run the commands that sets your eth interfaces to your zones.
 
@@ -243,11 +247,12 @@ We can see that the Public and Drop Zones are created by default. Therefore, we 
 **sudo firewall-cmd --zone=sales --change-interface=eth0**
 **sudo firewall-cmd --zone=mail --change-interface=eth0**
 
+![Sets eth interface](./Images/snap_8.PNG)
+
 
 ## Add services to the active zones:
 
 1. Run the commands that add services to the public zone, the web zone, the sales zone, and the mail zone.
-
 
 ### Public: Answer
 
@@ -255,6 +260,8 @@ We can see that the Public and Drop Zones are created by default. Therefore, we 
 **sudo firewall-cmd --zone=public --add-service=https**
 **sudo firewall-cmd --zone=public --add-service=pop3**
 **sudo firewall-cmd --zone=public --add-service=smtp**
+
+![Add service to public zone](./Images/snap_9.PNG)
 
 ### Web: Answer
 
@@ -275,7 +282,6 @@ What is the status of http, https, smtp and pop3?
 
 ## Add your adversaries to the Drop Zone.
 
-
 1. Run the command that will add all current and any future blacklisted IPs to the Drop Zone.
 
 ### Answer
@@ -284,6 +290,7 @@ What is the status of http, https, smtp and pop3?
 **sudo firewall-cmd --permanent --zone=drop --add-source=135.95.103.76**
 **sudo firewall-cmd --permanent --zone=drop --add-source=76.34.169.118**
 
+![Blacklisted Ips adress](./Images/snap_10.PNG)
 
 
 ## Make rules permanent then reload them:
@@ -297,6 +304,8 @@ It's good practice to ensure that your firewalld installation remains nailed up 
 
 **sudo firewall-cmd--reload**
 
+![Reload firewall](./Images/snap_11.PNG)
+
 
 ## View active Zones
 
@@ -308,6 +317,7 @@ Now, we'll want to provide truncated listings of all currently active zones. Thi
 
 **sudo firewall-cmd -list-all-zones**
 
+![List all the zones](./Images/snap_5.PNG)
 
 ## Block an IP address
 
@@ -315,7 +325,9 @@ Use a rich-rule that blocks the IP address 138.138.0.3.
 
 ### Answer
 
-**sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='138.138.0.3' reject**
+**sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="138.138.0.3" reject'**
+
+![Block an Ip adress command](./Images/snap_12.PNG)
 
 
 
@@ -329,6 +341,7 @@ Harden your network against ping scans by blocking icmp ehco replies.
 
 **sudo firewall-cmd --zone=public --add-icmp-block=echo-reply --add-icmp-block=echo-request**
 
+![Block an ping or icmp](./Images/snap_13.PNG)
 
 ## Rule Check
 
@@ -344,6 +357,10 @@ Now that you've set up your brand new firewalld installation, it's time to verif
 **sudo firewall-cmd --zone=sales --list-all**
 **sudo firewall-cmd --zone=mail --list-all**
 **sudo firewall-cmd --zone=drop --list-all**
+
+![List all of the rules settings](./Images/snap_14.PNG)
+
+![List all the rule settings](./Images/snap_y.PNG)
 
 
 Are all of our rules in place? If not, then go back and make the necessary modifications before checking again.

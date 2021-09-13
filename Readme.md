@@ -542,6 +542,10 @@ Answer the following:
 
 What was the indicator of an attack?
 
+### Answer
+
+Phisical
+
 Hint: What do the details of the reveal?
 
 Answer:
